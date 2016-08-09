@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="scrumApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Form</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.js"></script>
+	<script type="text/javascript" src="js/controllers.js"></script>
+	<style type="text/css">
+		body{
+			margin:15px;
+		}
+		.custom-btn{
+			margin-right:15px;
+		}
+	</style>
+</head>
+<body ng-controller="FormCtrl">
+<div class="container-fluid">
+  <div class="col-lg-6 col-sm-6 well">
+  	<form class="form-horizontal" name="userInfoForm">
+  		<fieldset>
+  			<legend>User Information</legend>
+		    <div class="form-group" ng-class="getCssClasses(userInfoForm.email)">
+		    	<label class="col-sm-2 control-label">E-mail*</label>
+		    	<div class="col-sm-10">
+		    		<input type="email" ng-model="user.email" name="email" required class="form-control" size="35">
+	    			<span ng-show="showError(userInfoForm.email, 'email')">
+						You must enter a valid email
+					</span>
+					<span ng-show="showError(userInfoForm.email, 'required')">
+						This field is required
+					</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="getCssClasses(userInfoForm.firstname)">
+		    	<label class="col-sm-2 control-label">First Name</label>
+		    	<div class="col-sm-10">
+		    		<input type="text" ng-model="user.firstname" name="firstname" class="form-control" size="35" ng-minlength="3">
+		    		<span ng-show="showError(userInfoForm.firstname, 'minlength')">
+						You must enter a valid first name (3 characters as minimum)
+					</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="getCssClasses(userInfoForm.lastname)">
+		    	<label class="col-sm-2 control-label">Last Name</label>
+		    	<div class="col-sm-10">
+		    		<input type="text" ng-model="user.lastname" name="lastname" class="form-control" size="35" ng-minlength="3">
+		    		<span ng-show="showError(userInfoForm.lastname, 'minlength')">
+						You must enter a valid last name (3 characters as minimum)
+					</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="getCssClasses(userInfoForm.website)">
+		    	<label class="col-sm-2 control-label">Website</label>
+		    	<div class="col-sm-10">
+		    		<input type="url" ng-model="user.website" name="website" class="form-control" size="35">
+		    		<span ng-show="showError(userInfoForm.website, 'url')">
+						You must enter a valid URL
+					</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="getCssClasses(userInfoForm.website)">
+		    	<label class="col-sm-2 control-label">Description</label>
+		    	<div class="col-sm-10">
+		    		<textarea ng-model="user.descr" name="descr" class="form-control"></textarea>
+				</div>
+			</div>
+			<div class="form-group" ng-class="getCssClasses(userInfoForm.password)">
+		    	<label class="col-sm-2 control-label">Password</label>
+		    	<div class="col-sm-10">
+		    		<input type="password" ng-model="user.password" name="password" class="form-control" size="35" ng-pattern="/^.*(?=.*\d)(?=.*[a-zA-Z]).*$/" ng-minlength="3" ng-maxlenth="20" required>
+		    		<span ng-show="showError(userInfoForm.password, 'pattern')">
+						You must enter a valid password (3-20 characters)
+					</span>
+					<span ng-show="showError(userInfoForm.password, 'required')">
+						This field is required
+					</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="getCssClasses(userInfoForm.repeatPassword)">
+		    	<label class="col-sm-2 control-label">Repeat password</label>
+		    	<div class="col-sm-10">
+		    		<input type="password" ng-model="user.repeatPassword" name="repeatPassword" class="form-control" size="35" ng-pattern="/^.*(?=.*\d)(?=.*[a-zA-Z]).*$/" ng-minlength="3" ng-maxlenth="20" required>
+		    		<span ng-show="showError(userInfoForm.repeatPassword, 'pattern')">
+						You must enter a valid password (3-20 characters)
+					</span>
+					<span ng-show="showError(userInfoForm.repeatPassword, 'required')">
+						This field is required
+					</span>
+					<span ng-show="!checkPasswords()">
+						This password is not the same as previous
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<button ng-disabled="!canSave()" class="btn btn-success pull-right custom-btn">Save</button>
+				<button class="btn btn-default pull-right custom-btn">Cancel</button>
+			</div>
+		</fieldset>
+	</form>
+  </div>
+</div>
+</body>
+</html>
